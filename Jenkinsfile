@@ -1,29 +1,48 @@
 pipeline {
-  agent any
-  environment {
-    DOCKERHUB = credentials('dockerhub-credentials')
-    DOCKER_USER = DOCKERHUB_USR
-    DOCKER_PASS = DOCKERHUB_PSW
-  }
-  stages {
-    stage('Checkout') { steps { checkout scm } }
-    stage('Build Backend') {
-      steps {
-        dir('backend') {
-          sh "docker build -t ${DOCKER_USER}/student-backend:latest ."
-          sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}"
-          sh "docker push ${DOCKER_USER}/student-backend:latest"
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                echo "Fetching latest code from Git..."
+                checkout scm
+            }
         }
-      }
-    }
-    stage('Build Frontend') {
-      steps {
-        dir('frontend') {
-          sh "docker build -t ${DOCKER_USER}/student-frontend:latest ."
-          sh "docker push ${DOCKER_USER}/student-frontend:latest"
+
+        stage('Build & Push Backend Image') {
+            steps {
+                dir('backend') {
+                    echo "Building backend Docker image..."
+                    bat 'docker build -t aarthidevops/student-backend:latest .'
+
+                    echo "Logging into Docker Hub..."
+                    bat 'echo yourdockerhubpassword | docker login'
+
+                    echo "Pushing backend image..."
+                    bat 'docker push aarthidevops/student-backend:latest'
+                }
+            }
         }
-      }
+
+        stage('Build & Push Frontend Image') {
+            steps {
+                dir('frontend') {
+                    echo "Building frontend Docker image..."
+                    bat 'docker build -t aarthidevops/student-frontend:latest .'
+
+                    echo "Pushing frontend image..."
+                    bat 'docker push aarthidevops/student-frontend:latest'
+                }
+            }
+        }
     }
-  }
-  post { success { echo 'Images built & pushed' } failure { echo 'Build failed' } }
+
+    post {
+        success {
+            echo " Images built & pushed to Docker Hub."
+        }
+        failure {
+            echo "Build failed."
+        }
+    }
 }
