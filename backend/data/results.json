@@ -1,0 +1,29 @@
+[
+  {
+    "roll": "101",
+    "name": "Alice",
+    "marks": {
+      "math": 85,
+      "science": 90,
+      "english": 78
+    }
+  },
+  {
+    "roll": "102",
+    "name": "Bob",
+    "marks": {
+      "math": 72,
+      "science": 65,
+      "english": 80
+    }
+  },
+  {
+    "roll": "103",
+    "name": "Charlie",
+    "marks": {
+      "math": 95,
+      "science": 88,
+      "english": 92
+    }
+  }
+]

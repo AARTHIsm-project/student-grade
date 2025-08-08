@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Student Results</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Student Result Management</h1>
+
+    <div class="box">
+      <h3>Get Result</h3>
+      <input id="rollInput" placeholder="Enter Roll Number (e.g., 101)"/>
+      <button id="getBtn">Get Result</button>
+      <div id="result" class="result"></div>
+    </div>
+
+    <div class="box">
+      <h3>Add New Result</h3>
+      <input id="newRoll" placeholder="Roll"/>
+      <input id="newName" placeholder="Name"/>
+      <input id="mMath" placeholder="Math"/>
+      <input id="mScience" placeholder="Science"/>
+      <input id="mEnglish" placeholder="English"/>
+      <button id="postBtn">Add Result</button>
+      <div id="postMsg"></div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
